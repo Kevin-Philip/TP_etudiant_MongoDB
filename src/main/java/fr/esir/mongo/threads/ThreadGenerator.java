@@ -1,8 +1,11 @@
 package fr.esir.mongo.threads;
 
+import fr.esir.mongo.tags.TagGenerator;
 import fr.esir.mongo.text.TextGenerator;
 import fr.esir.mongo.users.User;
 import fr.esir.mongo.users.UserGenerator;
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,6 +35,8 @@ public class ThreadGenerator implements Processor {
 
   private final UserGenerator userGenerator;
 
+  private final TagGenerator tagGenerator;
+
   @Override
   public void process(Exchange exchange) throws Exception {
     exchange.getIn().setBody(generateThread());
@@ -45,6 +50,7 @@ public class ThreadGenerator implements Processor {
       Thread newThread = Thread.builder()
               ._id(idString)
               .title(textGenerator.generateText(1))
+              .tags(tagGenerator.getTags())
               .build();
 
       knownThreads.put(idString, newThread);
