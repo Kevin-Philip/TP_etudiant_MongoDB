@@ -22,4 +22,8 @@ public class Post {
   private final String title;
   
   private final String content;
+
+  private final String id_user;
+
+  private final String id_thread;
 }
